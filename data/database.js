@@ -1,0 +1,25 @@
+const mongodb = require("mongodb");
+
+const MongoClient = mongodb.MongoClient;
+
+let database;
+
+async function connect() {
+  const client =await MongoClient.connect("mongodb://127.0.0.1:27017");
+  database = client.db('blog');
+}
+
+function getDb() {
+  if (!database) {
+    throw {
+      message:
+        "Sorry, Database Connection have not been established sucessfully",
+    };
+  }
+  return database;
+}
+
+module.exports = {
+  connectToDatabase: connect,
+  getDb: getDb,
+};
